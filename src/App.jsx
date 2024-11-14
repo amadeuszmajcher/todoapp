@@ -12,6 +12,13 @@ function App() {
         <button className={styles.button}>+</button>
       </header>
       <Form></Form>
+      <ul>
+        <li>
+          <span>Zapłacić rachunki</span>
+          <button>Zrobione</button>
+          <button>Usuń</button>
+        </li>
+      </ul>
     </div>
   );
 }
