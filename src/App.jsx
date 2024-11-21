@@ -1,9 +1,11 @@
+import { useState } from "react";
 import styles from "./App.module.css";
 import { Form } from "./components/Form/Form";
 import { Todoitem } from "./components/Todoitem/Todoitem";
 import { getSubheading } from "./utils/getSubheading";
 
 function App() {
+  const [isFormShown, setIsFormShown] = useState(false);
   const todos = [
     { name: "Zapłacić rachunki", done: false, id: 1 },
     { name: "Wyrzucić śmieci", done: true, id: 2 },
@@ -16,9 +18,16 @@ function App() {
           <h1>Do zrobienia</h1>
           <h2>{getSubheading(todos.length)}</h2>
         </div>
-        <button className={styles.button}>+</button>
+        {!isFormShown && (
+          <button
+            onClick={() => setIsFormShown(true)}
+            className={styles.button}
+          >
+            +
+          </button>
+        )}
       </header>
-      <Form></Form>
+      {isFormShown && <Form />}
       <ul>
         {todos.map(({ id, name, done }) => (
           <Todoitem key={id} name={name} done={done}></Todoitem>
