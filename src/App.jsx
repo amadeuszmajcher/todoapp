@@ -32,7 +32,11 @@ function App() {
           onFormSubmit={(newTodoName) => {
             setTodos((prevTodos) => [
               ...prevTodos,
-              { name: newTodoName, done: false, id: prevTodos.length + 1 },
+              {
+                name: newTodoName,
+                done: false,
+                id: prevTodos.length > 0 ? prevTodos.at(-1).id + 1 : 0,
+              },
             ]);
             setIsFormShown(false);
           }}
@@ -40,7 +44,29 @@ function App() {
       )}
       <ul>
         {todos.map(({ id, name, done }) => (
-          <Todoitem key={id} name={name} done={done}></Todoitem>
+          <Todoitem
+            key={id}
+            name={name}
+            done={done}
+            onDeleteButtonClick={() =>
+              setTodos((prevTodos) =>
+                prevTodos.filter((todo) => todo.id !== id)
+              )
+            }
+            onDoneButtonClick={() => {
+              setTodos((prevTodos) =>
+                prevTodos.map((todo) => {
+                  if (todo.id !== id) {
+                    return todo;
+                  }
+                  return {
+                    ...todo,
+                    done: true,
+                  };
+                })
+              );
+            }}
+          ></Todoitem>
         ))}
       </ul>
     </div>
